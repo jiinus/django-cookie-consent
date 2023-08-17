@@ -33,13 +33,13 @@ function showCookieBar (options) {
   .querySelector(".cc-cookie-accept", content)
   .addEventListener('click', (e) => {
     e.preventDefault();
-    fetch(e.target.getAttribute("href"), {method: "POST"})
+    fetch(e.target.getAttribute("href"), {method: "POST", headers: { "X-Requested-With": "XMLHttpRequest", }})
     .then(() => {
       content.style.display = "none";
       body.classList.remove('with-cookie-bar');
       scripts = document.querySelectorAll("script[type='x/cookie_consent']");
       scripts.forEach( (script) => {
-        if (cookie_groups.indexOf(script.getAttribute('data-varname')) != -1) {
+        if (opts.cookie_groups.indexOf(script.getAttribute('data-varname')) != -1) {
           evalXCookieConsent(script);
         }
       });
